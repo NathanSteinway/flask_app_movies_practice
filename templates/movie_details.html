@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block title %}{{ movie.title }} - Details{% endblock %}
+    
+    {% block body %}
+    <div class="movie-details">
+      <h1>{{ movie.title }}</h1>
+    
+      <p>
+        {{ movie.overview }}
+      </p>
+    </div>
+
+    
+    {% if session.get('user_email') %}
+    <h2>Rate this movie</h2>
+    <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
+      <p>
+        Rating:
+        <select name="rating">
+          <option value="">Select rating</option>
+          {% for num in range(6) %}
+            <option value="{{ num }}">{{ num }}</option>
+          {% endfor %}
+        </select>
+      </p>
+      <p><input type="submit"></p>
+    </form>
+    {% endif %}
+    
+    <div class="img">
+      <img src="{{ movie.poster_path }}">
+    </div>
+    {% endblock %}
+</body>
+</html>
